@@ -2,8 +2,26 @@ const mongoose =require('mongoose');
 const Schema=mongoose.Schema;
 
 const userSchema=new Schema({
+    id:{
+       type:String,
+    },
     url:{
         type:String
+    },
+    name:{
+        type:String,
+    },
+    nights:{
+        type:Number,
+    },
+    days:{
+        type:Number
+    },
+    price:{
+        type:Number
+    },
+    inclusions:{
+        type:Array
     },
     isCompleted:{
         type:Boolean,
@@ -14,7 +32,7 @@ const userSchema=new Schema({
         default:true,
     },
     JobType:{
-        type:JSON
+        type:String,
     },
 },{timestamps:true})
 

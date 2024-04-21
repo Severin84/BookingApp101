@@ -11,7 +11,7 @@ router.post("/login",AdminController.getAdminData)
 //     console.log("Fuck")
 //   }
 router.get("/allJobs",getJob)
-// router.post("/job",createJob)
+//router.post("/job",createJob)
 // router.post("/job",scrap)
 router.route("/job").post(scrap)
 // router.route("/job").post(createJob)
