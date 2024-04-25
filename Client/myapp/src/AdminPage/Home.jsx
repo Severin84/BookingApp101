@@ -7,7 +7,7 @@ import { BiLogoGmail } from "react-icons/bi";
 import { FaYoutube } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
-import Img from "../utils/fernando-meloni-j_gnGCDQRew-unsplash.jpg"
+import Img from "../utils/ian-schneider-PAykYb-8Er8-unsplash.jpg"
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 const Home = () => {
@@ -20,30 +20,15 @@ const Home = () => {
     }
 
   return (
-   <div style={{backgroundImage:`url(${Img})`}}>
-    {/* <section style={{height:"10vh",backdropFilter:"blur(4px)"}}>
-        <div style={{display:"flex",justifyContent:"center"}}>
-            <div style={{display:"flex",alignContent:"center",position:"relative",justifyContent:"center",gap:"2rem"}}>
-                <span style={{fontSize:"1.5rem",marginTop:"1rem"}}>Tours</span>
-                <span style={{fontSize:"1.5rem",marginTop:"1rem"}}>Flights</span>
-                <span style={{fontSize:"1.5rem",marginTop:"1rem"}}>Hotels</span>
-            </div>
-            <div style={{display:"flex",alignContent:"center",position:"relative",justifyContent:"center",gap:"2rem",marginLeft:"20rem"}}>
-                <div>
-                <button style={{fontSize:"1.5rem",marginTop:"1rem",borderRadius:"1rem",backgroundColor:"#b1a2a2",width:"5rem"}}>Login</button>
-                </div>
-                <button style={{fontSize:"1.5rem",marginTop:"1rem",borderRadius:"1rem",backgroundColor:"#b1a2a2",width:"2.5rem"}}>xyz</button>
-            </div>
-        </div>
-    </section> */}
-    {/* <NavBar/> */}
+    <div >
+   <div style={{backgroundImage:`url(${Img})`,backgroundRepeat:"no-repeat",backgroundAttachment:'fixed',backgroundSize:"100% 100%"}}>
     <section>
         <div style={{height:"70vh",justifyContent:"center",position:"relative",alignContent:"center",marginLeft:"35vw"}}>
             <div style={{marginTop:"-7rem"}}>
-                <span style={{fontSize:"2rem",marginLeft:'6rem'}}>Best Price</span>
+                <span style={{fontSize:"2rem",marginLeft:'6rem',color:"white"}}>Best Price</span>
             </div>
             <div style={{marginTop:"2rem"}}>
-                <span style={{fontSize:"3rem",marginLeft:'1rem'}}>AnyTime AnyWhere</span>
+                <span style={{fontSize:"3rem",marginLeft:'1rem',color:"white"}}>AnyTime AnyWhere</span>
             </div>
             <div style={{gap:"5rem",position:"relative",display:"flex",marginLeft:"-4rem"}}>
                 <input placeholder='Search Location' style={{height:"2rem",borderRadius:"1rem"}} onChange={(e)=>setSearch(e.target.value)}/>
@@ -52,7 +37,7 @@ const Home = () => {
             </div>
         </div>
     </section>
-    <section style={{height:"20vh",display:"flex",justifyContent:"center",gap:"20rem",backdropFilter:"blur(4px)"}}>
+    <section style={{height:"20vh",display:"flex",justifyContent:"center",gap:"20rem",backdropFilter:"blur(4px)",color:"white"}}>
         <div>
             <div>
               <h2 style={{fontWeight:"bold"}}>Destination</h2>
@@ -85,6 +70,7 @@ const Home = () => {
             </div>
         </div>
     </section>
+   </div>
    </div>
   )
 }

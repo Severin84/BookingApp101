@@ -5,11 +5,20 @@ import img from "../utils/fernando-meloni-j_gnGCDQRew-unsplash.jpg"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
+const Signup = ({setIsLogged}) => {
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
   const [name,setName]=useState("");
-  const [confirmPassword,setConfirmPassword]=useState("");
+  // const [confirmPassword,setConfirmPassword]=useState("");
+
+  const handleRegister=async()=>{
+     const response=await axios.post('http://localhost:5000/api/admin/register',{email:email,password:password,name:name});
+     //console.log(response)
+     if(response.status===200){
+       setIsLogged(true);
+       navigate("/home");
+     }
+  }
   const navigate=useNavigate();
   return (
     <div className='h-[100vh] w-full flex items-center justify-center bg-cover bg-center bg-no-repeat' style={{backgroundImage:`url(${img})`}}>
@@ -34,11 +43,11 @@ const Signup = () => {
                     <Input placeholder='Name' type="Name" value={name} onChange={e=>setName(e.target.value)} color="danger"/>
                     <Input placeholder='Email' type="email" value={email} onChange={e=>setEmail(e.target.value)} color="danger"/>
                     <Input placeholder='password' type="password" value={password} onChange={e=>setPassword(e.target.value)} color="danger"/>
-                    <Input placeholder='confirm password' type="password" value={password} onChange={e=>setConfirmPassword(e.target.value)} color="danger"/>
+                    {/* <Input placeholder='confirm password' type="password" value={password} onChange={e=>setConfirmPassword(e.target.value)} color="danger"/> */}
                   </div>
                 </CardBody>
                 <CardFooter className='flex flex-col gap-2 items-center justify-center'>
-                    <Button color="danger" variant='shadow' className='w-full capitalize' size="lg">Login</Button>
+                    <Button color="danger" variant='shadow' className='w-full capitalize' size="lg" onClick={()=>handleRegister()}>Submit</Button>
                 </CardFooter>
             </Card>
         </div>

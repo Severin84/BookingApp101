@@ -2,12 +2,25 @@ const mongoose =require('mongoose');
 const Schema=mongoose.Schema;
 
 const userSchema=new Schema({
+    name:{
+       type:String,
+       required:[true,"Name is required"],
+    },
     email:{
-        type:String
+        type:String,
+        required:[true,"Email is required"],
     },
     password:{
-        password:String
+        type:String,
+        required:[true,"Password is required"],
     },
+    role:{
+        type:String,
+        default:"user",
+    },
+    verifiedAt:{
+        type:Date,
+    }
    
 },{timeStamps:true})
 

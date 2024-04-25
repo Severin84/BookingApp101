@@ -7,21 +7,23 @@ import TripsPage from './AdminPage/TripsPage';
 import './App.css';
 import Login from './AuthComponents/Login';
 import {BrowserRouter, Route, Routes} from "react-router-dom"
+import { useState } from 'react';
+import FlightsHome from './AdminPage/FlightsHome';
 function App() {
+  const [isLogged,setIsLogged]=useState(false);
   return (
     // <Login/>
     <>
-    
    <BrowserRouter>
-   <NavBar/>
+   <NavBar logged={isLogged}/>
      <Routes>
-      
-      <Route path='/login' element={<Login/>}/>
-      <Route path="/signUp" element={<Signup/>}/>
+      <Route path='/' element={<Login setIsLogged={setIsLogged}/>}/>
+      <Route path="/signUp" element={<Signup  setIsLogged={setIsLogged}/>}/>
       <Route path="/tripDetails/:id" element={<TripsDetails/>}/>
       <Route path='/home' element={<Home/>}/>
       <Route path='/trips/:id' element={<TripsPage/>}/>
       <Route path='/admin' element={<AdminPage/>}/>
+      <Route path="/flightsPage" element={<FlightsHome/>}/>
      </Routes>
    </BrowserRouter>
    </>

@@ -8,11 +8,11 @@ import { SiAeroflot } from "react-icons/si";
 //import { ADMIN_API_ROUTES } from '../lib/ApiRoutes';
 
 
-
-const Login = () => {
+const Login = ({setIsLogged}) => {
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
     const navigate=useNavigate();
+    
     const handlelogin=async ()=>{
       try{
         // const response=await fetch("http://localhost:5000/api/admin/login",{
@@ -23,10 +23,12 @@ const Login = () => {
           email:email,
           password:password
         })
-         console.log(response)
+        // console.log(response)
         if(response?.data?.userInfo?.email==="admin@gmail.com"){
+          setIsLogged(true);
           navigate('/admin');
         }else{
+          setIsLogged(true)
           navigate('/home')
         }
       }catch(error){

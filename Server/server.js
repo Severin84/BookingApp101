@@ -32,6 +32,7 @@ app.use(bodyParser.json());
 
 //app.use("/api",adminRoute)
 
+
 app.use("/api/admin",adminRoute)
 app.use("/api",JobsRoute);
 

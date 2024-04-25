@@ -4,6 +4,7 @@ const chromium=require("playwright");
 const playwright=require("playwright")
 const cheerio=require('cheerio');
 const Trips = require("../models/Trips.js");
+const Flights = require("../models/Flights.js");
 //const puppeteer = require('puppeteer-core');
 const SBR_WS_ENDPOINT = 'wss://brd-customer-hl_3d930120-zone-bookingapp:3up3ww12e3i4@brd.superproxy.io:9222';
 
@@ -189,175 +190,7 @@ const scrap=async(req,res,next)=>{
               
               console.log("navigated! Scraping page content..");
               let data=await page.evaluate(()=>{
-                //  console.log("jnxjnx")
-                //  const packageDetails={
-                //     description:"",
-                //     image:[],
-                //     theme:[],
-                //     detailedIntineary:[],
-                //     destinationItinerary:[],
-                //     destinationDetails:[],
-                //     packageIteniary:[],
-                //  }
- 
-                //  console.log("on evalute");
- 
-                //  const packageElement=document.querySelector("#main-container");
-                //  const descriptionSelector=packageElement?.querySelector("#pkgOverView");
-                //  const regex=new RegExp("Yatra","gi");
-                //  descriptionSelector?.querySelector(".readMore")?.click();
-                //  packageDetails.description=packageElement?.querySelector("#pkgOverView p")?.innerHTML.replace(regex,"Arklyte");
- 
-                //  packageDetails.image=Array.from(packageElement?.querySelectorAll(".galeryThumbImg")).map((imageElement)=>imageElement.getAttribute("src")?.replace("/t_holidays_responsivedetailsthumbimg",""))
- 
-                //  const themesSelector=packageElement?.querySelector("#packageThemes");
-                //  packageDetails.theme=Array.from(themesSelector?.querySelectorAll("li")).map((li)=>li.innerText.trim());
- 
-                //  const description=[];
- 
-                //  const dayElements=packageElement.querySelectorAll(".itineraryOverlay .subtitle");
- 
-                //  dayElements?.forEach((dayElement)=>{
-                //    const title=dayElement?.textContent?.trim();
-                //    const value=[];
- 
-                //    let nextElement=dayElement.nextElementSibling;
-                //    while(nextElement && !nextElement.classList.contains("subtitle")){
-                //      const textContent=nextElement?.textContent?.trim();
- 
-                //      if(textContent){
-                //        value.push(textContent)
-                //      }
-                //      nextElement=nextElement.nextElementSibling
-                //    }
- 
-                //    description.push({title,value});
-                //  })
- 
-                //  console.log({packageDetails});
- 
-                //  packageDetails.destinationItinerary=description;
-                 
- 
-                //  const destinationItinerary=[];
- 
-                //  const destinationItinerarySelector=packageElement?.querySelectorAll(".type-list li");
-                //  destinationItinerarySelector?.forEach((element)=>{
-                //    const placeElement=element.firstChild;
-                //    const placeText=packageElement?.textContent.trim().replace([/[\n\t]/g,""]);
- 
-                //    const nightsElement=element.querySelector("span");
-                //    let totalNights=0;
- 
-                //    if(nightsElement){
-                //      const nightsText=nightsElement?.textContent.trim();
-                //      const nightsmatch=nightsText.match(/\d+/);
-                //      totalNights=nightsElement? parseInt(nightsmatch[0]):0;
-                //    }
- 
-                //    destinationItinerary.push({place:placeText,totalNights});
-                //  })
- 
-                //  packageDetails.destinationItinerary=destinationItinerary;
- 
-                //  const cities=[];
- 
-                //  const readMoreButton=document.getElementById("readMore");
- 
-                //  if(readMoreButton){
-                //    readMoreButton.click();
-                //  }
- 
-                //  const cityElements=document.querySelectorAll(".tabbing a");
-                //  cityElements.forEach((cityElement)=>{
-                //    cityElement.click();
- 
-                //    const readMoreButtonCity=document.getElementById("readMore");
- 
-                //    if(readMoreButton){
-                //      readMoreButtonCity.click();
-                //    }
- 
-                //    const cityName=cityElement?.textContent.trim();
- 
-                //    const cityDescription=document.getElementById("aboutDestPara")?.textContent.trim();
- 
-                //    const cityImage=document.querySelector(".info-block img")?.getAttribute("src");
- 
-                //    cities.push({
-                //      name:cityName,
-                //      description:cityDescription?cityDescription:"",
-                //      image:cityImage?cityImage:""
-                //    })
-                //  })
- 
-                //  packageDetails.destinationDetails=cities;
- 
-                //  const dataExtracted=[];
-                //  const timeline=document.querySelector(".time-line .right-column");
-                //  const articles=timeline.querySelectorAll("article");
- 
- 
-                //  articles?.forEach((article)=>{
-                //    const cityNameElement=article.querySelector(".title.row.acc-title .first.ng-binding");
-                //    const cityName=cityNameElement?cityNameElement?.textContent.trim():"";
-                //    const daysSelector=article.querySelectorAll(".days.acc-content");
- 
-                //    const daysActivity=[];
- 
-                //    daysSelector.forEach((daySelector)=>{
-                //      const activityElements=daySelector.querySelectorAll(".items-content");
- 
-                //      const acitvities=[];
- 
-                //      if(activityElements.length>0){
-                //        activityElements.forEach((activityElements,index)=>{
-                //          const activityTypeElement=activityElements.querySelector(".content.left.ico");
-                //          const activityType=activityTypeElement?activityTypeElement?.textContent.trim().split(" ")[0].split(" ")[0].split("\n")[0]:`Activity ${index+1}`;
- 
-                //          let activityDescription=null;
- 
-                //          if(activityType==="MEAL"||activityType==="SIGHTSEEING"){
-                //            const listHolder=activityElements.querySelector(".list-holder");
- 
-                //            if(listHolder){
-                //              const liElements=listHolder.querySelectorAll("li.ng-scope");
- 
-                //              if(liElements.length>0){
-                //                const scrapedData=[];
- 
-                //                liElements.forEach((liElement,index)=>{
-                //                  const liText=liElement?.textContent.trim();
-                //                  scrapedData.push({index:index+1,text:liText});
-                //                })
- 
-                //                activityDescription=scrapedData;
-                //              }
-                //            }
-                //          }else if(activityType==="HOTEL"){
-                //             const activityDescriptionElements=activityElements.querySelector(".content.right .name a")
- 
-                //             activityDescription=activityDescriptionElements?activityDescriptionElements?.textContent.trim():null;
-                //           }else if(activityType==="FLIGHT"){
-                //            const places=activityElements.querySelectorAll(".place span.full");
- 
-                //            const scrappedData=[];
-                //            places.forEach((place)=>{
-                //              scrappedData.push(place?.textContent.trim())
-                //            })
-                //            activityDescription=scrappedData
-                //           }
- 
-                //           acitvities.push({activityType,activityDescription})
-                //        })
-                //      }
-                //      daysActivity.push(acitvities)
-                //    })
-                //    dataExtracted.push({city:cityName,daysActivity})
-                //  })
-                //  packageDetails.packageIteniary=dataExtracted
                
-                //  return packageDetails
 
                 //=========================================================
 
@@ -591,6 +424,149 @@ const scrap=async(req,res,next)=>{
    }
 }
 
+const scrapFlights=async(req,res,next)=>{
+  const query=req.params;
+  const {url,JobType}=req.body;
+  try{
+     if(JobType==="flight"){
+        console.log("in flight scraping");
+        console.log("connected! navigating to :"+url);
+        const browser=await playwright.chromium.launch({headless:false});
+        const page=await browser.newPage();
+        await page.goto(url);
+        console.log("Navigated! Scraping page content...");
+    //     //=============================================================
+    //     let flights=await page.evaluate(()=>{
+    //            console.log("0")
+    //            const data=[];
+    //            console.log("1")
+    //            const fightSelectors=document.querySelectorAll(".nrc6-wrapper");
+    //            console.log("2")
+    //            fightSelectors.forEach((flightElement)=>{
+    //              const airlinelogo=flightElement.querySelector("img")?.src || "";
+    //              console.log("3")
+    //              const [rawDepartureTime,rawArrivalTime]=(flightElement.querySelector(".vmXl")?.innerText || "").split(" - ");
+    //              console.log("4")
+    //              const extractTime=(rawTime)=>{
+    //                const timeWithoutNumber=rawTime.replace(/[0-9+\s]+$/,"").trim();
+    //                return timeWithoutNumber
+    //              }
+    //              console.log("5")
+    //              const departureTime=extractTime(rawDepartureTime);
+    //              const arrivalTime=extractTime(rawArrivalTime);
+    //              console.log("6")
+    //              const flightDuration=(flightElement.querySelector(".xdW8")?.children[0]?.innerText || "").trim();
+    //              console.log("7")
+    //              const airlineName=(flightElement.querySelector(".VY2U")?.children[1]?.innerText || "").trim();
+    //              console.log("8")
+    //              const price=parseInt((flightElement.querySelector(".f8F1-price-text")?.innerText || "").replace(/[^\d]/g,"").trim(),10);
+    //              console.log("9")
+    //              data.push({
+    //               airlinelogo,
+    //               departureTime,
+    //               arrivalTime,
+    //               flightDuration,
+    //               airlineName,
+    //               price,
+    //              })
+
+    //              console.log("10")
+    //            })
+    //             return data;
+    //        })
+
+          // await Job.updateOne(url,{isCompleted:true,status:"complete"});
+
+          //  for(const flight of flights){
+          //   await Flights.create({
+          //     name:flight?.airlineName,
+          //     logo:flight?.airlinelogo,
+          //     from:query?.from,
+          //     to:query?.to,
+          //     departureTime:flight?.departureTime,
+          //     arrivalTime:flight?.arrivalTime,
+          //     duration:flight?.flightDuration,
+          //     price:flight?.price,
+          //     jobId:Job?._id
+          //   })
+          //  }
+
+          // console.log(flights)
+          // await browser.close()
+        //=============================================================
+    //  }
+     let data=await page.evaluate(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+  
+      const flights= [];
+  
+      const flightSelectors = document.querySelectorAll(".nrc6-wrapper");
+  
+      flightSelectors.forEach((flightElement) => {
+        const airlineLogo = flightElement.querySelector("img")?.src || "";
+        const [rawDepartureTime, rawArrivalTime] = (
+          flightElement.querySelector(".vmXl")?.innerText || ""
+        ).split(" – ");
+  
+        // Function to extract time and remove numeric values at the end
+        const extractTime = (rawTime)=> {
+          const timeWithoutNumbers = rawTime.replace(/[0-9+\s]+$/, "").trim();
+          return timeWithoutNumbers;
+        };
+  
+        const departureTime = extractTime(rawDepartureTime);
+        const arrivalTime = extractTime(rawArrivalTime);
+        const flightDuration = (
+          flightElement.querySelector(".xdW8")?.children[0]?.innerText || ""
+        ).trim();
+  
+        const airlineName = (
+          flightElement.querySelector(".VY2U")?.children[1]?.innerText || ""
+        ).trim();
+  
+        // Extract price
+        const price = parseInt(
+          (flightElement.querySelector(".f8F1-price-text")?.innerText || "")
+            .replace(/[^\d]/g, "")
+            .trim(),
+          10
+        );
+  
+        flights.push({
+          airlineLogo,
+          departureTime,
+          arrivalTime,
+          flightDuration,
+          airlineName,
+          price,
+        });
+      });
+      
+      return flights;
+    });
+
+
+    //data.forEach(async(pkg)=>{
+      let response=await Job.findOne({url:url});
+      if(!response){
+         await Job.create({url:url,isCompleted:true,status:"complete",JobType:JobType})
+      }
+    //})
+    
+
+    for(const val of data){
+      await Flights.create({name:val.airlineName,logo:val?.airlineLogo,from:query.src,to:query.dest,departureTime:val.departureTime,arrivalTime:val.arrivalTime,duration:val.flightDuration,price:val.price})
+    }
+     console.log(data)
+     browser.close()
+     res.status(200).json({message:"Done"})
+    }
+    //res.status(400).json({message:"Not Done"})
+  }catch(error){
+     res.status(400).json({message:error})
+  }
+}
+
 module.exports={
-    createJob,getJob,scrap,getTrips,getTripDetails
+    createJob,getJob,scrap,getTrips,getTripDetails,scrapFlights
 }
