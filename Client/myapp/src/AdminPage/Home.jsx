@@ -10,11 +10,23 @@ import { FaTwitter } from "react-icons/fa";
 import Img from "../utils/ian-schneider-PAykYb-8Er8-unsplash.jpg"
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
+import axios from 'axios';
 const Home = () => {
     const navigate=useNavigate()
     const [startDate,setStartDate]=useState(new Date())
     const [search,setSearch]=useState("");
+    const [selectedcity,setSelectedcity]=useState("");
 
+    const startScraping=async()=>{
+        try{
+          const response=await axios.post("http://localhost:5000/api/admin/job",{
+            url:`https://packages.yatra.com/holidays/intl/search.htm?destination=${search}`,
+            JobType:"location"
+          })
+        }catch(error){
+            console.log(error)
+        }   
+      }
     function pageNavigate(){
         navigate(`/trips/${search}`)
     }
@@ -33,7 +45,7 @@ const Home = () => {
             <div style={{gap:"5rem",position:"relative",display:"flex",marginLeft:"-4rem"}}>
                 <input placeholder='Search Location' style={{height:"2rem",borderRadius:"1rem"}} onChange={(e)=>setSearch(e.target.value)}/>
                 <DatePicker selected={startDate}  onChange={(date)=>setStartDate(date)}/>
-                <button style={{height:"2rem",borderRadius:"1rem",backgroundColor:'#6f074e',width:'5rem'}} onClick={()=>pageNavigate()}>Search</button>
+                <button style={{height:"2rem",borderRadius:"1rem",backgroundColor:'#6f074e',width:'5rem'}} onClick={()=>{pageNavigate();startScraping()}}>Search</button>
             </div>
         </div>
     </section>

@@ -21,7 +21,6 @@ const ScrapsData = () => {
         url:`https://packages.yatra.com/holidays/intl/search.htm?destination=${selectedcity}`,
         JobType:"location"
       })
-       //console.log(response)
     }catch(error){
         console.log(error)
     }   

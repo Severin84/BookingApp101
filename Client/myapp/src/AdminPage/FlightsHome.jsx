@@ -13,7 +13,7 @@ import { cityAirportCode } from '../utils/CityAirportCodes';
 import axios from "axios"
 const FlightsHome = () => {
     const navigate=useNavigate()
-    const [startDate,setStartDate]=useState(new Date())
+    const [startDate,setStartDate]=useState("")
     const [search,setSearch]=useState("");
     const [index,setIndex]=useState();
     const [fromcode,setFromCode]=useState();
@@ -31,20 +31,21 @@ const FlightsHome = () => {
     }
 
     function pageNavigate(){
-        navigate(`/trips/${search}`)
+        navigate(`/flights/${fromcode}/${toCode}`)
     }
 
     async function getFlights(){
-      if(setStartDate && fromcode && toCode){
-        const response=await axios.post("link",{
-          url:`https://www.kayak.com/flights/${fromcode}-${toCode}/${startDate}/`,
+      let date=startDate.split('T')[0];
+      //console.log(date)
+      if(date && fromcode && toCode){
+        const response=await axios.post(`http://localhost:5000/api/flights/${fromcode}/${toCode}/${date}`,{
+          url:`https://www.kayak.com/flights/${fromcode}-${toCode}/${date}/`,
           JobType:"Flight"
         })
       }
     }
-
-    
-
+   // console.log(startDate)
+  // console.log(startDate.toString().split('T')[0])
     //console.log(format startDate)
   return (
     <div >
@@ -58,10 +59,10 @@ const FlightsHome = () => {
                  <span style={{fontSize:"3rem",marginLeft:'1rem',color:"white"}}>AnyTime AnyWhere</span>
              </div>
              <div style={{gap:"5rem",position:"relative",display:"flex",marginLeft:"-4rem"}}>
-                 <input placeholder='Flights ' style={{height:"2rem",borderRadius:"1rem"}} onChange={(e)=>findFromCodes(e.target.value)}/>
-                 <input placeholder='Flights' style={{height:"2rem",borderRadius:"1rem"}} value={fromcode} onChange={(e)=>findToCodes(e.target.value)}/>
-                 <DatePicker  selected={startDate} dateFormat="yyyy-MM-dd" onChange={(date)=>setStartDate(date)}/>
-                 <button style={{height:"2rem",borderRadius:"1rem",backgroundColor:'#6f074e',width:'5rem'}} value={toCode} onClick={()=>{pageNavigate();getFlights()}}>Search</button>
+                 <input placeholder='Flights ' style={{height:"2rem",borderRadius:"1rem"}} value={fromcode} onChange={(e)=>findFromCodes(e.target.value)}/>
+                 <input placeholder='Flights' style={{height:"2rem",borderRadius:"1rem"}} value={toCode} onChange={(e)=>findToCodes(e.target.value)}/>
+                 <DatePicker  selected={startDate} dateFormat="yyyy-MM-dd" onChange={(date)=>setStartDate(date.toISOString())}/>
+                 <button style={{height:"2rem",borderRadius:"1rem",backgroundColor:'#6f074e',width:'5rem'}}  onClick={()=>{pageNavigate();getFlights()}}>Search</button>
              </div>
          </div>
      </section>

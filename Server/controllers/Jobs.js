@@ -395,13 +395,11 @@ const scrap=async(req,res,next)=>{
                     }
                     daysActivity.push(activities);
                   });
-            
                   dataExtracted.push({
                     city: cityName,
                     daysActivity,
                   });
                 });
-            
                 packageDetails.packageIteniary = dataExtracted;
             
                 return packageDetails;
@@ -427,75 +425,16 @@ const scrap=async(req,res,next)=>{
 const scrapFlights=async(req,res,next)=>{
   const query=req.params;
   const {url,JobType}=req.body;
+  
   try{
-     if(JobType==="flight"){
+     if(JobType==="Flight"){
         console.log("in flight scraping");
         console.log("connected! navigating to :"+url);
         const browser=await playwright.chromium.launch({headless:false});
         const page=await browser.newPage();
         await page.goto(url);
         console.log("Navigated! Scraping page content...");
-    //     //=============================================================
-    //     let flights=await page.evaluate(()=>{
-    //            console.log("0")
-    //            const data=[];
-    //            console.log("1")
-    //            const fightSelectors=document.querySelectorAll(".nrc6-wrapper");
-    //            console.log("2")
-    //            fightSelectors.forEach((flightElement)=>{
-    //              const airlinelogo=flightElement.querySelector("img")?.src || "";
-    //              console.log("3")
-    //              const [rawDepartureTime,rawArrivalTime]=(flightElement.querySelector(".vmXl")?.innerText || "").split(" - ");
-    //              console.log("4")
-    //              const extractTime=(rawTime)=>{
-    //                const timeWithoutNumber=rawTime.replace(/[0-9+\s]+$/,"").trim();
-    //                return timeWithoutNumber
-    //              }
-    //              console.log("5")
-    //              const departureTime=extractTime(rawDepartureTime);
-    //              const arrivalTime=extractTime(rawArrivalTime);
-    //              console.log("6")
-    //              const flightDuration=(flightElement.querySelector(".xdW8")?.children[0]?.innerText || "").trim();
-    //              console.log("7")
-    //              const airlineName=(flightElement.querySelector(".VY2U")?.children[1]?.innerText || "").trim();
-    //              console.log("8")
-    //              const price=parseInt((flightElement.querySelector(".f8F1-price-text")?.innerText || "").replace(/[^\d]/g,"").trim(),10);
-    //              console.log("9")
-    //              data.push({
-    //               airlinelogo,
-    //               departureTime,
-    //               arrivalTime,
-    //               flightDuration,
-    //               airlineName,
-    //               price,
-    //              })
-
-    //              console.log("10")
-    //            })
-    //             return data;
-    //        })
-
-          // await Job.updateOne(url,{isCompleted:true,status:"complete"});
-
-          //  for(const flight of flights){
-          //   await Flights.create({
-          //     name:flight?.airlineName,
-          //     logo:flight?.airlinelogo,
-          //     from:query?.from,
-          //     to:query?.to,
-          //     departureTime:flight?.departureTime,
-          //     arrivalTime:flight?.arrivalTime,
-          //     duration:flight?.flightDuration,
-          //     price:flight?.price,
-          //     jobId:Job?._id
-          //   })
-          //  }
-
-          // console.log(flights)
-          // await browser.close()
-        //=============================================================
-    //  }
-     let data=await page.evaluate(async () => {
+       let data=await page.evaluate(async () => {
       await new Promise((resolve) => setTimeout(resolve, 5000));
   
       const flights= [];
@@ -557,7 +496,7 @@ const scrapFlights=async(req,res,next)=>{
     for(const val of data){
       await Flights.create({name:val.airlineName,logo:val?.airlineLogo,from:query.src,to:query.dest,departureTime:val.departureTime,arrivalTime:val.arrivalTime,duration:val.flightDuration,price:val.price})
     }
-     console.log(data)
+     //console.log(data)
      browser.close()
      res.status(200).json({message:"Done"})
     }
@@ -567,6 +506,109 @@ const scrapFlights=async(req,res,next)=>{
   }
 }
 
+const getFlightsData=async(req,res,next)=>{
+  const src=req.params.src
+ // console.log("hell")
+  const dest=req.params.dest;
+// console.log(para)
+  if(!src||!dest){
+    res.status(400).json({message:"Invalid request"});
+  }
+  try{
+    const data=await Flights.find({from:src,to:dest});
+    if(data){
+      console.log(data);
+      res.status(200).json({data:data})
+    }else{
+      res.status(400).json({message:"fuck"})
+    }
+  }catch(error){
+    res.status(400).json({message:"Something went wrong"});
+  }
+}
+
+const scrapHotels=async(req,res,next)=>{
+  const {url,JobType}=req.body;
+  try{
+    if(JobType==="hotels"){
+      console.log("connected! navigation to:"+url);
+      const browser=await playwright.chromium.launch({headless:false});
+      const page=await browser.newPage();
+      await page.goto(url);
+      console.log("Navigated! Scraping page content...");
+      //await page.
+      // page.set
+      await page.setViewportSize({ width: 1920, height: 1080 });
+      console.log("Page Viewport set.");
+      const setl= ".NhpT-mod-radius-base";
+      await page.waitForSelector(setl);
+      console.log("Wait for selector complete.");
+      await page.type(".NhpT-mod-radius-base:nth-child(2)", location);
+      console.log("Page location typing complete.");
+      const liSelector = "ul.EMAt li:first-child";
+      await page.waitForSelector(liSelector);
+      console.log("Page li selector complete.");
+      await page.click(liSelector);
+      console.log("Page li click complete.");
+      const buttonSelector = "#main-search-form button[type='submit']";
+      await page.waitForSelector(buttonSelector);
+      console.log("Page button selector complete.");
+      const [target] = await Promise.all([
+        new Promise((resolve) => browser.once("targetcreated", resolve)),
+        await page.click(buttonSelector),
+      ]);
+    
+      const newPage = await target.page();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log("Timeout Complete. [New Page Open]");
+    
+      await newPage.bringToFront();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log("Timeout Complete. [Bring to Front]");
+    
+      // const client = await page.createCDPSession();
+      // console.log('Waiting captcha to solve...');
+      // const { status } = await client.send('Captcha.waitForSolve', {
+      //     detectTimeout: 10000,
+      // });
+      // console.log('Captcha solve status:', status);
+      //   await newPage.bringToFront();
+      console.log("Starting Page Evalution");
+      await new Promise((resolve) => setTimeout(resolve, 30000));
+    
+      let data=await newPage.evaluate(() => {
+        // Your scraping logic goes here
+        const hotels = [];
+        const selectors = document.querySelectorAll(".yuAt");
+        selectors.forEach((selector) => {
+          const title = selector.querySelector(".IirT-header")?.innerText;
+    
+          const price = parseInt(
+            (selector.querySelector(".D8J--price-container span")?.innerText || "")
+              .replace(/[^\d]/g, "")
+              .trim(),
+            10
+          );
+          const photo = selector.querySelector(".e9fk-photoWrap img")?.src;
+          if (title && price && photo) hotels.push({ title, price, photo });
+        });
+        return hotels;
+      });
+
+      console.log(data)
+    }
+  }catch(error){
+     res.status(400).json({message:"somthing went wrong while retriving Hotels"})
+  }
+}
+
 module.exports={
-    createJob,getJob,scrap,getTrips,getTripDetails,scrapFlights
+    createJob,
+    getJob,
+    scrap,
+    getTrips,
+    getTripDetails,
+    scrapFlights,
+    getFlightsData,
+    scrapHotels
 }

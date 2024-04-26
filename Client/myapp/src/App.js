@@ -9,6 +9,7 @@ import Login from './AuthComponents/Login';
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 import { useState } from 'react';
 import FlightsHome from './AdminPage/FlightsHome';
+import Flightspage from './AdminPage/Components/Flightspage';
 function App() {
   const [isLogged,setIsLogged]=useState(false);
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path='/trips/:id' element={<TripsPage/>}/>
       <Route path='/admin' element={<AdminPage/>}/>
       <Route path="/flightsPage" element={<FlightsHome/>}/>
+      <Route path="/flights/:src/:dest" element={<Flightspage/>}/>
      </Routes>
    </BrowserRouter>
    </>
