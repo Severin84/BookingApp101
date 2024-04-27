@@ -16,10 +16,9 @@ const TripsDetails = () => {
    },[])
    async function getData(){
       const data=await axios.get(`http://localhost:5000/api/tripDetails/${params.id}`)
-      // console.log(data.data.data);
       setTrips([data.data.data]);
    }
-console.log(trip)
+
 
   return (
     <div style={{display:"flex"}}>

@@ -5,6 +5,7 @@ import apiClient from '../lib/ApiClient';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { SiAeroflot } from "react-icons/si";
+import logo from "../utils/carolina-nichitin-5OY83OiKlNQ-unsplash.jpg"
 //import { ADMIN_API_ROUTES } from '../lib/ApiRoutes';
 
 
@@ -15,15 +16,11 @@ const Login = ({setIsLogged}) => {
     
     const handlelogin=async ()=>{
       try{
-        // const response=await fetch("http://localhost:5000/api/admin/login",{
-        // method:"POST",
-        // body:JSON.stringify({email:email,password:password})
-        //  })
+        
         const response=await axios.post("http://localhost:5000/api/admin/login",{
           email:email,
           password:password
         })
-        // console.log(response)
         if(response?.data?.userInfo?.email==="admin@gmail.com"){
           setIsLogged(true);
           navigate('/admin');
@@ -42,13 +39,11 @@ const Login = ({setIsLogged}) => {
             <Card className='shadow-2xl bg-opacity-20 w-[480px] z-0'>
                 <CardHeader className='flex flex-col gap-1 capitalize text-3xl items-center'>
                     <div className='flex flex-col item-center justify-center'>
-                        <Image 
-                        src={"LOGO"}
+                        <img 
+                        src={logo}
                         alt="logo"
-                        height={80}
-                        width={80}
+                        style={{height:"80px",width:"80px",borderRadius:"2.5rem",marginLeft:"4rem"}}
                         className='cursor-pointer'/>
-
                         <span className='text-xl uppercase font-medium italic text-white'>
                             <span>ARKLYTE ADMIN LOGIN</span>
                         </span>

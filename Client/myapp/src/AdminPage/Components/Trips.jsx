@@ -8,22 +8,19 @@ const Trips = () => {
     const getData=async()=>{
        try{
           const response=await axios.get("http://localhost:5000/api/jobs")
-          console.log(response.data.JOBS)
+         
           setTrips(response?.data?.JOBS)
        }catch(error){
           console.log(error)
        }
    }
-  //  const interval=setInterval(()=>getData(),3000);
+   const interval=setInterval(()=>getData(),3000);
 
-  //  return()=>{
-  //      clearInterval(interval)
-  //  }
+   return()=>{
+       clearInterval(interval)
+   }
   getData();
   },[])
-
- 
-  //console.log(trips)
   return (
     <div>
       <div style={{justifyContent:"space-between",width:"50vw"}}>

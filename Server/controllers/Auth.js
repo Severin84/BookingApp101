@@ -7,7 +7,6 @@ const config=require("config")
 
 const register=async(req,res,next)=>{
    const {name,email,password}=req.body;
-   console.log("here")
    if(!name||!email||!password){
      res.status(400).json({message:"Please fill all the fields"});
    }
@@ -36,19 +35,6 @@ const register=async(req,res,next)=>{
       })
 
       await verification.save();
-
-    //   res.status(201).json(
-    //     success("Register success",{
-    //         user:{
-    //             id:newUser._id,
-    //             name:newUser.name,
-    //             email:newUser.email,
-    //             verifiedAt:newUser.verifiedAt
-    //         },
-    //         verification,
-    //     })
-    //   )
-
     res.status(200).json({message:"Registeration Successfull"});
    }catch(error){
       res.status(400).json({message:"Something went wrong while registering"})
@@ -149,7 +135,6 @@ const reset=async(req,res,next)=>{
      if(!user){
         res.status(400).json({message:"User not found"})
      }
-     console.log("HELLO")
      let hash=await bcrypt.getSalt(10);
      
      let hashedPassword=await bcrypt.hash(password,hash);

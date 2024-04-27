@@ -10,7 +10,6 @@ const ScrapsData = () => {
 
   const searchCities=async (searchString)=>{
     const response=await axios.get(`http://api.geonames.org/searchJSON?q=${searchString}&maxRows=10&username=adarsh84`)
-   // console.log(response)
     const data=response.data?.geonames;
     setCities(data?.map((city)=>city.name)||[]);
   }
@@ -28,12 +27,8 @@ const ScrapsData = () => {
 
   useEffect(()=>{
     const getData=async()=>{
-      // const data=await ();
-       //console.log(data);
        try{
           const response=await axios.get("http://localhost:5000/api/admin/allJobs")
-         // console.log(response.data.length)
-          //console.log(response)
           setJobs(response.data)
        }catch(error){
           console.log(error)
@@ -45,8 +40,6 @@ const ScrapsData = () => {
        clearInterval(interval)
    }
   },[])
-  //console.log(jobs)
-  //console.log(cities)
   return (
     <section className='m-10 grid grid-cols-3 gap-5 z-999 relative'>
      <Card className='col-span-2 z-999'>
@@ -78,9 +71,9 @@ const ScrapsData = () => {
       </CardFooter>
      </Card>
      <ScrapingQueue/>
-     <div className='col-span-3' >
+     {/* <div className='col-span-3' >
       {jobs.length>0 && <CurrentlyScrapingTable  jobs={jobs}/>}
-     </div>
+     </div> */}
     </section>
   )
 }

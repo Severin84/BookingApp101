@@ -14,7 +14,7 @@ const AdminPage = () => {
  const menuItem=[
     {lable:"DashBoard",icons:<FaHome/>,link:<DashBoard/>},
     {lable:"Trips",icons:<BiSolidCategory/>,link:<Trips/>},
-    {lable:"Hotels",icons:<FaHotel/>,link:<Hotels/>},
+    // {lable:"Hotels",icons:<FaHotel/>,link:<Hotels/>},
     {lable:"Bookings",icons:<FaBookOpen/>,link:<Bookings/>},
     {lable:"Scrape Data",icons:<MdOutlineDataUsage/>,link:<ScrapsData/>},
  ]

@@ -71,7 +71,6 @@ export default function CurrentlyScrapingTable({jobs}) {
 
   const filteredItems = React.useMemo(() => {
     let filteredUsers = jobs.JOBS;
-    //console.log(filteredUsers)
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((jobs) =>
         jobs.url.toLowerCase().includes(filterValue.toLowerCase()),
@@ -82,7 +81,6 @@ export default function CurrentlyScrapingTable({jobs}) {
         Array.from(statusFilter).includes(user.status),
       );
     }
-   // console.log(filteredUsers)
     return filteredUsers;
   }, [jobs,hasSearchFilter, filterValue, statusFilter]);
 
@@ -288,10 +286,6 @@ export default function CurrentlyScrapingTable({jobs}) {
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}}
-
-        {/* { (item)=>
-          console.log(item)
-        } */}
       </TableBody>
     </Table>
   );

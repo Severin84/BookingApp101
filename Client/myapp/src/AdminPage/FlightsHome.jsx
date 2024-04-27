@@ -36,7 +36,6 @@ const FlightsHome = () => {
 
     async function getFlights(){
       let date=startDate.split('T')[0];
-      //console.log(date)
       if(date && fromcode && toCode){
         const response=await axios.post(`http://localhost:5000/api/flights/${fromcode}/${toCode}/${date}`,{
           url:`https://www.kayak.com/flights/${fromcode}-${toCode}/${date}/`,
@@ -44,9 +43,7 @@ const FlightsHome = () => {
         })
       }
     }
-   // console.log(startDate)
-  // console.log(startDate.toString().split('T')[0])
-    //console.log(format startDate)
+  
   return (
     <div >
     <div style={{backgroundImage:`url(${Img})`,backgroundRepeat:"no-repeat",backgroundAttachment:'fixed',backgroundSize:"100% 100%"}}>
@@ -61,7 +58,9 @@ const FlightsHome = () => {
              <div style={{gap:"5rem",position:"relative",display:"flex",marginLeft:"-4rem"}}>
                  <input placeholder='Flights ' style={{height:"2rem",borderRadius:"1rem"}} value={fromcode} onChange={(e)=>findFromCodes(e.target.value)}/>
                  <input placeholder='Flights' style={{height:"2rem",borderRadius:"1rem"}} value={toCode} onChange={(e)=>findToCodes(e.target.value)}/>
-                 <DatePicker  selected={startDate} dateFormat="yyyy-MM-dd" onChange={(date)=>setStartDate(date.toISOString())}/>
+                 <div >
+                 <DatePicker style={{height:"2rem",borderRadius:"1rem"}}  selected={startDate} dateFormat="yyyy-MM-dd" onChange={(date)=>setStartDate(date.toISOString())}/>
+                 </div>
                  <button style={{height:"2rem",borderRadius:"1rem",backgroundColor:'#6f074e',width:'5rem'}}  onClick={()=>{pageNavigate();getFlights()}}>Search</button>
              </div>
          </div>

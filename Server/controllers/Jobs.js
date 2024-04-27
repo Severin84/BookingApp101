@@ -17,35 +17,20 @@ const createJob=async(req,res,next)=>{
         return ;
       }
        const response=await Job.create({url:url,JobType:JobType})
-  
-      ///console.log(response)
        res.status(200).json({jobCreated:true});
-     // res.status(200).json({url:url,JobType:JobType});
     }catch(error){
         res.status(400).json({message:error});
     }
-    
-  //console.log("FUCK")
 }
 
 const getJob=async(req,res,next)=>{
-  //console.log("kee")
   const jobs=await Job.find().sort({createdAt:-1});
-
-  //const onGoingJobs=await Job.find({isCompleted:false})
    try{
     
     if(!jobs){
      res.status(400).json({message:"Somthing when wrong in geeting job"});
     }
-    // else{
-    //   return jobs.length;
-    // }
-   // console.log(jobs)
-
      res.status(200).json({JOBS:jobs,length:jobs?.length||0});
-   // res.status(200).json({message:jobs})
-    // res.status(200).json({message:"vaba laba dub dub"})
    }catch(error){
      res.status(400).json({message:error})
    }
@@ -67,7 +52,6 @@ const getTrips=async(req,res,next)=>{
 
 const getTripDetails=async(req,res,next)=>{
    const  id=req.params.id;
-   console.log(id)
    if(!id){
     res.status(400).json({message:"Somthing went worng"});
    }
@@ -92,9 +76,7 @@ const scrap=async(req,res,next)=>{
         await page.goto(url);
         let data=await page.evaluate(()=>{
           const packageElements = document.querySelectorAll(".packages-container");
-
           const packages= [];
-      
           packageElements.forEach((packageElement) => {
             const packageInfo= {
               id: null,
@@ -159,11 +141,8 @@ const scrap=async(req,res,next)=>{
       
           return packages;
         })
-    
-        //console.log(data)
         data.forEach(async(pkg) =>{
           const response=await Job.findOne({url:pkg.url})
-          // console.log("dush")
           if(!response){
             const job=await Job.create({url:`https://packages.yatra.com/holidays/intl/details.htm?packageId=${pkg?.id}`,JobType:"package",nights:pkg.nights,price:pkg.price,id:pkg.id,name:pkg.name,days:pkg.days})
           }
@@ -172,9 +151,7 @@ const scrap=async(req,res,next)=>{
            
         // }
         await browser.close()
-        // console.log(data)
       }
-      console.log("for package")
       const package=await Job.find({JobType:"package"});
       for(const pkg of package){
         if(pkg.JobType==="package"){
@@ -185,9 +162,7 @@ const scrap=async(req,res,next)=>{
               const browser=await playwright.chromium.launch({headless:false});
               const page=await browser.newPage();
               await page.goto(pkg.url);
-              
-              //console.log(response)
-              
+    
               console.log("navigated! Scraping page content..");
               let data=await page.evaluate(()=>{
                
@@ -406,17 +381,13 @@ const scrap=async(req,res,next)=>{
               }
             )
               const response = await Trips.create({id:pkg?.id,name:pkg?.name,nights:pkg?.nights,days:pkg?.days,destinationItinerary:data?.destinationItinerary,images:data?.images,inclusions:pkg?.inclusions,theme:data?.themes,price:pkg?.price,destinationDetails:data?.destinationDetails,detailedIntineary:data?.detailedIntineary,description:data?.description,packageIteniary:data?.packageIteniary})
-              //console.log(response);
+             
               await browser.close()
              }
           }
          }
          
       }
-      
-     
-      //console.log(data)
-      //await browser.close();
    }catch(error){
         res.status(400).json({message:error});
    }
@@ -425,7 +396,6 @@ const scrap=async(req,res,next)=>{
 const scrapFlights=async(req,res,next)=>{
   const query=req.params;
   const {url,JobType}=req.body;
-  
   try{
      if(JobType==="Flight"){
         console.log("in flight scraping");
@@ -485,18 +455,10 @@ const scrapFlights=async(req,res,next)=>{
     });
 
 
-    //data.forEach(async(pkg)=>{
-      let response=await Job.findOne({url:url});
-      if(!response){
-         await Job.create({url:url,isCompleted:true,status:"complete",JobType:JobType})
-      }
-    //})
-    
-
     for(const val of data){
       await Flights.create({name:val.airlineName,logo:val?.airlineLogo,from:query.src,to:query.dest,departureTime:val.departureTime,arrivalTime:val.arrivalTime,duration:val.flightDuration,price:val.price})
     }
-     //console.log(data)
+    
      browser.close()
      res.status(200).json({message:"Done"})
     }
@@ -508,16 +470,15 @@ const scrapFlights=async(req,res,next)=>{
 
 const getFlightsData=async(req,res,next)=>{
   const src=req.params.src
- // console.log("hell")
+
   const dest=req.params.dest;
-// console.log(para)
+
   if(!src||!dest){
     res.status(400).json({message:"Invalid request"});
   }
   try{
     const data=await Flights.find({from:src,to:dest});
     if(data){
-      console.log(data);
       res.status(200).json({data:data})
     }else{
       res.status(400).json({message:"fuck"})
@@ -566,13 +527,7 @@ const scrapHotels=async(req,res,next)=>{
       await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log("Timeout Complete. [Bring to Front]");
     
-      // const client = await page.createCDPSession();
-      // console.log('Waiting captcha to solve...');
-      // const { status } = await client.send('Captcha.waitForSolve', {
-      //     detectTimeout: 10000,
-      // });
-      // console.log('Captcha solve status:', status);
-      //   await newPage.bringToFront();
+    
       console.log("Starting Page Evalution");
       await new Promise((resolve) => setTimeout(resolve, 30000));
     
@@ -594,14 +549,23 @@ const scrapHotels=async(req,res,next)=>{
         });
         return hotels;
       });
-
-      console.log(data)
     }
   }catch(error){
      res.status(400).json({message:"somthing went wrong while retriving Hotels"})
   }
 }
 
+const FlightBooking=async(req,res,next)=>{
+   try{
+      const data=await Flights.find();
+      if(!data){
+        res.status(400).json({message:"There isn't any relevent data"})
+      }
+      res.status(200).json({FlightData:data});
+   }catch(error){
+      res.status(400).json({message:"Somthing went wrong while getting flights data"})
+   }
+}
 module.exports={
     createJob,
     getJob,
@@ -610,5 +574,6 @@ module.exports={
     getTripDetails,
     scrapFlights,
     getFlightsData,
-    scrapHotels
+    scrapHotels,
+    FlightBooking,
 }

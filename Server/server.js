@@ -6,6 +6,7 @@ const cors=require('cors');
 const cookieParser=require("cookie-parser")
 const adminRoute =require("./routes/Admin.js")
 const JobsRoute=require("./routes/Jobs.js")
+const DataBase=require("./routes/DataBase.js")
 const app = express();
 //1dX00PzApP27G9PR
 //mongodb+srv://84severin:1dX00PzApP27G9PR@cluster0.xwr044z.mongodb.net/
@@ -35,6 +36,7 @@ app.use(bodyParser.json());
 
 app.use("/api/admin",adminRoute)
 app.use("/api",JobsRoute);
+app.use("/api/database",DataBase)
 
 //const PORT = process.env.PORT || 5000
 const PORT=5000

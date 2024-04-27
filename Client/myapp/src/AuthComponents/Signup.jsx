@@ -13,7 +13,6 @@ const Signup = ({setIsLogged}) => {
 
   const handleRegister=async()=>{
      const response=await axios.post('http://localhost:5000/api/admin/register',{email:email,password:password,name:name});
-     //console.log(response)
      if(response.status===200){
        setIsLogged(true);
        navigate("/home");

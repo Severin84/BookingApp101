@@ -18,16 +18,12 @@ const getAdminData=async (req,res,next)=>{
     if(!email||!password){
        res.json({message:"Please enter both email and Password"})
     } 
-    console.log(email);
     const user=await Admin.findOne({email,password});
 
     if(!user){
       res.json({message:"Invalid email or Password"})
     }else{
-      //console.log("Hello from back");
       const token=await createToken(email,user.id);
-      //console.log(token)
-     // cookies.set("access_token",token);
       res.json({
         userInfo:{
             id:user.id,
@@ -40,22 +36,6 @@ const getAdminData=async (req,res,next)=>{
       res.json({message:"An error occure with admin"})
   }
    
-
-
-//    let admin=new Admin({
-//       email:email,
-//       password:password
-//    })
-//    admin.save()
-//    .then(response=>{
-//     res.json({
-//         message:"Admin in"
-//     })
-//    }).catch(error=>{
-//     res.json({
-//         message:"Some error occured while Admitting the Admin"
-//     })
-//    })
 }
 
 

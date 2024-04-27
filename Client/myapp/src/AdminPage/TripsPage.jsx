@@ -22,12 +22,10 @@ const TripsPage = () => {
        setTrips(res);
     }
     function showData(id){
-      //console.log(id)
       navigate(`/tripDetails/${id}`)
 
     }
 
-    console.log(trips)
   return (
     <div>
         {

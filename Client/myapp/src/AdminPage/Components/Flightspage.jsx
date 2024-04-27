@@ -8,7 +8,6 @@ const Flightspage = () => {
     const [data,setData]=useState([]);
     const [price,setprice]=useState(0);
     const [people,setPeople]=useState(1);
-    //console.log(params)
     useEffect(()=>{
        let response;
         const getData=async()=>{
@@ -28,7 +27,6 @@ const Flightspage = () => {
       // }
      
       },[])
-      //console.log(data)
       
   return (
     <div style={{display:"flex"}}>

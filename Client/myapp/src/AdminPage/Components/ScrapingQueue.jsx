@@ -7,11 +7,9 @@ const ScrapingQueue = () => {
 
      useEffect(()=>{
         const getData=async()=>{
-           // const data=await ();
-            //console.log(data);
             try{
                const response=await axios.get("http://localhost:5000/api/admin/allJobs")
-              // console.log(response.data.length)
+             
                setOnGoingJobs(response.data.length)
             }catch(error){
                console.log(error)
