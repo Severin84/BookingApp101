@@ -8,6 +8,9 @@ const userSchema=new Schema({
     url:{
         type:String
     },
+    location:{
+        type:String
+    },
     name:{
         type:String,
     },

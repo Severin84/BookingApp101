@@ -10,7 +10,7 @@ const NavBar = ({logged}) => {
   return (
     <div>
     <div style={{backgroundColor:"#000000",color:"white"}}>
-        <section style={{height:"10vh",backdropFilter:"blur(4px)",display:"flex",justifyContent:"space-between",width:"90vw"}}>
+        <section style={{height:"10vh",backdropFilter:"blur(4px)",display:"flex",justifyContent:"space-between",width:"95vw"}}>
             <div style={{marginTop:"0.5rem"}}>
             <img src={logo} alt="logo"style={{height:"50px",width:"50px",borderRadius:"2.5rem",marginLeft:"4rem"}}className='cursor-pointer'/>
             </div>
@@ -20,7 +20,8 @@ const NavBar = ({logged}) => {
                 <span style={{fontSize:"1.5rem",marginTop:"1rem"}} onClick={()=>navigate('/flightsPage')}>Flights</span>
                 {/* <span style={{fontSize:"1.5rem",marginTop:"1rem"}}>Hotels</span> */}
             </div>
-            <div style={{display:"flex",alignContent:"center",position:"relative",justifyContent:"center",gap:"2rem",marginLeft:"20rem"}}>
+        </div>
+        <div style={{display:"flex",alignContent:"center",position:"relative",justifyContent:"center",gap:"2rem",marginLeft:"20rem"}}>
                 {
                     logged===false ? <div style={{width:"15rem",display:"flex",justifyContent:"space-between"}}>
                     <button style={{fontSize:"1.5rem",marginTop:"1rem",borderRadius:"1rem",backgroundColor:"#4352f5",width:"5rem",height:"3rem"}} onClick={()=>navigate('/')}>Login</button>
@@ -28,7 +29,6 @@ const NavBar = ({logged}) => {
                     </div>
                     :<div style={{fontSize:"2rem",marginTop:"1rem",marginRight:"-5rem"}}><CgProfile /></div>
                 }
-            </div>
         </div>
     </section>
     </div>

@@ -21,7 +21,8 @@ const Home = () => {
         try{
           const response=await axios.post("http://localhost:5000/api/admin/job",{
             url:`https://packages.yatra.com/holidays/intl/search.htm?destination=${search}`,
-            JobType:"location"
+            JobType:"location",
+            location:`${search}`
           })
         }catch(error){
             console.log(error)

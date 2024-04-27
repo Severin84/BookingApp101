@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { FaBagShopping } from "react-icons/fa6";
 import { IoMdPerson } from "react-icons/io";
 import { IoIosPricetag } from "react-icons/io";
+import { LiaPlaceOfWorshipSolid } from "react-icons/lia";
 
 const TripsDetails = () => {
    const params=useParams();
@@ -18,7 +19,8 @@ const TripsDetails = () => {
       const data=await axios.get(`http://localhost:5000/api/tripDetails/${params.id}`)
       setTrips([data.data.data]);
    }
-
+ 
+   console.log(trip)
 
   return (
     <div style={{display:"flex"}}>
@@ -41,6 +43,17 @@ const TripsDetails = () => {
                </div>
                <div style={{marginTop:"5rem"}} >
                <div style={{marginBottom:"2rem"}}>
+                  <div style={{display:"flex",flexWrap:"wrap"}}>
+                     {
+                        value?.destinationDetails?.map((val,idx)=>(
+                           <div key={idx}>
+                              {
+                                 val.image?<img style={{height:'10rem',width:'14rem',borderRadius:"1rem"}} src={val?.image}/>:<LiaPlaceOfWorshipSolid  style={{fontSize:"10rem"}}/>
+                              }
+                           </div>
+                        ))
+                     }
+                  </div>
                <p>{value?.description}</p>
                </div>
                {value?.detailedIntineary.map((val,idx)=>(
@@ -53,6 +66,7 @@ const TripsDetails = () => {
              </div>
          ))}
       </div>
+     
       <div style={{width:'18vw',height:"7rem"}}>
          {
             trip.map((value,idx)=>(

@@ -11,6 +11,9 @@ const userSchema=new Schema({
     nights:{
         type:Number
     },
+    location:{
+        type:String
+    },
     days:{
         type:Number
     },

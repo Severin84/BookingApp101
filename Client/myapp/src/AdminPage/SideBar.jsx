@@ -19,7 +19,7 @@ const SideBar = ({menuItem,selectedItem,setSelectedItem}) => {
             <div className='flex items-center justify-center my-10 flex-col'>
                 <img src={logo} alt="logo" style={{height:"80px",width:"80px",borderRadius:"2.5rem"}} className="cursor-pointer" onClick={()=>navigate('/admin')}/>
                 <span className='text-3xl uppercase font-medium'>
-                    <span>ARKLYTE</span>
+                    <span>BookIng Wise</span>
                 </span>
             </div>
             {

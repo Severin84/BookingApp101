@@ -45,7 +45,7 @@ const Login = ({setIsLogged}) => {
                         style={{height:"80px",width:"80px",borderRadius:"2.5rem",marginLeft:"4rem"}}
                         className='cursor-pointer'/>
                         <span className='text-xl uppercase font-medium italic text-white'>
-                            <span>ARKLYTE ADMIN LOGIN</span>
+                            <span>BookIng Wise LOGIN</span>
                         </span>
                     </div>
                 </CardHeader>

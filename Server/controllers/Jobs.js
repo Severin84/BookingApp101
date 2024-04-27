@@ -38,8 +38,11 @@ const getJob=async(req,res,next)=>{
 }
 
 const getTrips=async(req,res,next)=>{
-   const data=await Trips.find();
+
+   const id=req.params.id;
+   console.log(id)
    try{
+    const data=await Trips.find({location:id});
     if(!data){
       res.status(400).json({message:"Somthing went worng"});
     }
@@ -68,12 +71,12 @@ const getTripDetails=async(req,res,next)=>{
 }
 
 const scrap=async(req,res,next)=>{
-   const {url,JobType}=req.body;
+   const {url,JobType,location}=req.body;
    try{
       if(JobType==="location"){
         const browser=await playwright.chromium.launch({headless:false});
         const page=await browser.newPage();
-        await page.goto(url);
+        await page.goto(url,5000);
         let data=await page.evaluate(()=>{
           const packageElements = document.querySelectorAll(".packages-container");
           const packages= [];
@@ -142,9 +145,9 @@ const scrap=async(req,res,next)=>{
           return packages;
         })
         data.forEach(async(pkg) =>{
-          const response=await Job.findOne({url:pkg.url})
+          const response=await Job.findOne({location:location})
           if(!response){
-            const job=await Job.create({url:`https://packages.yatra.com/holidays/intl/details.htm?packageId=${pkg?.id}`,JobType:"package",nights:pkg.nights,price:pkg.price,id:pkg.id,name:pkg.name,days:pkg.days})
+            const job=await Job.create({url:`https://packages.yatra.com/holidays/intl/details.htm?packageId=${pkg?.id}`,JobType:"package",nights:pkg.nights,price:pkg.price,id:pkg.id,name:pkg.name,days:pkg.days,location:location})
           }
         });
         // forEach(let pkg in data){
@@ -161,12 +164,11 @@ const scrap=async(req,res,next)=>{
              if(pkg.url){
               const browser=await playwright.chromium.launch({headless:false});
               const page=await browser.newPage();
-              await page.goto(pkg.url);
+              await page.goto(pkg.url,5000);
     
               console.log("navigated! Scraping page content..");
               let data=await page.evaluate(()=>{
                
-
                 //=========================================================
 
                 const packageDetails = {
@@ -380,7 +382,7 @@ const scrap=async(req,res,next)=>{
                 return packageDetails;
               }
             )
-              const response = await Trips.create({id:pkg?.id,name:pkg?.name,nights:pkg?.nights,days:pkg?.days,destinationItinerary:data?.destinationItinerary,images:data?.images,inclusions:pkg?.inclusions,theme:data?.themes,price:pkg?.price,destinationDetails:data?.destinationDetails,detailedIntineary:data?.detailedIntineary,description:data?.description,packageIteniary:data?.packageIteniary})
+              const response = await Trips.create({id:pkg?.id,name:pkg?.name,nights:pkg?.nights,days:pkg?.days,destinationItinerary:data?.destinationItinerary,images:data?.images,inclusions:pkg?.inclusions,theme:data?.themes,price:pkg?.price,destinationDetails:data?.destinationDetails,detailedIntineary:data?.detailedIntineary,description:data?.description,packageIteniary:data?.packageIteniary,location:location})
              
               await browser.close()
              }
@@ -402,7 +404,7 @@ const scrapFlights=async(req,res,next)=>{
         console.log("connected! navigating to :"+url);
         const browser=await playwright.chromium.launch({headless:false});
         const page=await browser.newPage();
-        await page.goto(url);
+        await page.goto(url,5000);
         console.log("Navigated! Scraping page content...");
        let data=await page.evaluate(async () => {
       await new Promise((resolve) => setTimeout(resolve, 5000));

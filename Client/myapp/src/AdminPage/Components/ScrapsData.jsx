@@ -18,7 +18,8 @@ const ScrapsData = () => {
     try{
       const response=await axios.post("http://localhost:5000/api/admin/job",{
         url:`https://packages.yatra.com/holidays/intl/search.htm?destination=${selectedcity}`,
-        JobType:"location"
+        JobType:"location",
+        location:`${selectedcity}`,
       })
     }catch(error){
         console.log(error)
