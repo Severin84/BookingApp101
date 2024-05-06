@@ -19,7 +19,7 @@ const Flightspage = () => {
            }
        }      
        //while(response?.data?.data?.length===0){
-         const interval=setInterval(()=>getData(),5000);
+         const interval=setInterval(()=>getData(),15000);
          return()=>{
              clearInterval(interval)
          }
@@ -34,8 +34,8 @@ const Flightspage = () => {
         {
           data && data.map((value,idx)=>(
             <div key={idx} style={{display:"flex",height:"10rem",width:"60vw",justifyContent:"space-between",margin:"2rem",boxShadow:"2px 1px 1px #000000",borderRadius:"1rem"}}>
-              <div>
-              <img style={{borderRadius:"2.5rem",height:"3rem",width:"3rem"}} src={value.logo}/>
+              <div style={{minWidth:"10rem",minHeight:"20rem",height:"10rem",float:"left"}}>
+              <img style={{height:"10rem",width:"100%"}} src={value.logo}/>
               <span>{value.name}</span>
               </div>
               <div style={{display:"flex",flexDirection:"column",gap:"0.5rem"}}>

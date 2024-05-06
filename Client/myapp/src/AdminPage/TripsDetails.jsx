@@ -5,7 +5,11 @@ import { FaBagShopping } from "react-icons/fa6";
 import { IoMdPerson } from "react-icons/io";
 import { IoIosPricetag } from "react-icons/io";
 import { LiaPlaceOfWorshipSolid } from "react-icons/lia";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import PaymentComponent from '../PaymentComponent';
 
+const stripePromise=loadStripe('pk_test_51OSPOtSCpvXYxeMvJRyvrTZFaN14ceJ85Wgd2sMYiUYPYzkI7zKh9thVs85WYgt7x5OcJEfagyQoyfwH3idOY5fH00NaXkCN25');
 const TripsDetails = () => {
    const params=useParams();
    const [trip,setTrips]=useState([]);
@@ -66,8 +70,8 @@ const TripsDetails = () => {
              </div>
          ))}
       </div>
-     
-      <div style={{width:'18vw',height:"7rem"}}>
+     <Elements stripe={stripePromise}>
+      <div style={{width:'18vw',height:"10rem"}}>
          {
             trip.map((value,idx)=>(
                <div key={idx}>
@@ -93,11 +97,14 @@ const TripsDetails = () => {
                <div style={{display:'flex',justifyContent:"center",position:"relative"}}>
                   <button style={{width:"12rem",backgroundColor:"#247bd3",borderRadius:"1.5rem",height:"2rem"}}>Proceed to Payments</button>
                </div>
+               <div>
+                 <PaymentComponent amount={value?.price * people}/>
+               </div>
                </div>
             ))
          }
-         
       </div>
+      </Elements>
     </div>
   )
 }
