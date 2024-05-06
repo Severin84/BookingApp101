@@ -35,7 +35,7 @@ const ScrapsData = () => {
           console.log(error)
        }
    }
-   const interval=setInterval(()=>getData(),3000);
+   const interval=setInterval(()=>getData(),15000);
 
    return()=>{
        clearInterval(interval)

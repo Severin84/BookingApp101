@@ -38,10 +38,9 @@ const getJob=async(req,res,next)=>{
 }
 
 const getTrips=async(req,res,next)=>{
-
-   const id=req.params.id;
-   console.log(id)
+ //  console.log(id)
    try{
+    const id=req.params.id;
     const data=await Trips.find({location:id});
     if(!data){
       res.status(400).json({message:"Somthing went worng"});
