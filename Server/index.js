@@ -4,11 +4,13 @@ const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY);
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors=require('cors');
+const dotenv=require('dotenv')
 const cookieParser=require("cookie-parser")
 const adminRoute =require("./routes/Admin.js")
 const JobsRoute=require("./routes/Jobs.js")
 const DataBase=require("./routes/DataBase.js");
 const Stripe=require("./routes/Stripe.js")
+dotenv.config();
 const app = express();
 
 //1dX00PzApP27G9PR
