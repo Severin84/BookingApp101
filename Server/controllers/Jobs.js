@@ -70,7 +70,7 @@ const getTripDetails=async(req,res,next)=>{
 const scrap=async (req,res,next)=>{
    try{
     let {url,JobType,location}=await req.body;
-    console.log("SUP")
+    console.log("SU")
       if(JobType==="location"){
         const browser=await playwright.chromium.launch({headless:false});
         const page=await browser.newPage();
