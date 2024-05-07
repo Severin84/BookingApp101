@@ -26,15 +26,13 @@ const createJob=async(req,res,next)=>{
 const getJob=async(req,res,next)=>{
   const jobs=await Job.find().sort({createdAt:-1});
    try{
-    
     if(!jobs){
      res.status(400).json({message:"Somthing when wrong in geeting job"});
     }
      res.status(200).json({JOBS:jobs,length:jobs?.length||0});
    }catch(error){
      res.status(400).json({message:error})
-   }
-    
+   } 
 }
 
 const getTrips=async(req,res,next)=>{
