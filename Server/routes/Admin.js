@@ -11,6 +11,7 @@ router.post("/login",AdminController.getAdminData)
 // function check(){
 //     console.log("Fuck")
 //   }
+
 router.get("/allJobs",getJob)
 router.post("/loginUser",login)
 router.post("/register",register)

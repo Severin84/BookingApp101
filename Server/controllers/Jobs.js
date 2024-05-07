@@ -69,6 +69,7 @@ const getTripDetails=async(req,res,next)=>{
 
 const scrap=async(req,res,next)=>{
    const {url,JobType,location}=req.body;
+   console.log(url)
    try{
       if(JobType==="location"){
         const browser=await playwright.chromium.launch({headless:false});
