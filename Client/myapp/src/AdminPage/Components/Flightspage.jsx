@@ -8,24 +8,19 @@ const Flightspage = () => {
     const [data,setData]=useState([]);
     const [price,setprice]=useState(0);
     const [people,setPeople]=useState(1);
+    //http://localhost:5000/api/
     useEffect(()=>{
-       let response;
         const getData=async()=>{
-           try{
-              response=await axios.get(`http://localhost:5000/api/flightData/${params.src}/${params.dest}`)
+              let response=await axios.get(`https://bookingapp101-7.onrender.com/api/allFlightData`)
               setData(response?.data?.data);
-           }catch(error){
-              console.log(error)
-           }
        }      
-       //while(response?.data?.data?.length===0){
+      
          const interval=setInterval(()=>getData(),15000);
          return()=>{
              clearInterval(interval)
          }
           getData();
-      // }
-     
+    
       },[])
       
   return (
