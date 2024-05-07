@@ -70,7 +70,7 @@ const getTripDetails=async(req,res,next)=>{
 const scrap=async (req,res,next)=>{
    try{
     let {url,JobType,location}=await req.body;
-    console.log(url)
+    console.log("SUP")
       if(JobType==="location"){
         const browser=await playwright.chromium.launch({headless:false});
         const page=await browser.newPage();
@@ -389,7 +389,7 @@ const scrap=async (req,res,next)=>{
          
       }
    }catch(error){
-        res.status(300).json({message:"Fuck OF"});
+        res.status(400).json({message:error.message});
    }
 }
 
