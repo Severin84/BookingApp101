@@ -389,7 +389,7 @@ const scrap=async (req,res,next)=>{
          
       }
    }catch(error){
-        res.status(300).json({message:"Fuck OFF"});
+        res.status(300).json({message:"Fuck OF"});
    }
 }
 
