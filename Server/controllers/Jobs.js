@@ -68,8 +68,6 @@ const getTripDetails=async(req,res,next)=>{
 }
 
 const scrap=async(req,res,next)=>{
-  
-  
    try{
     const {url,JobType,location}=req.body;
     console.log(url)
